@@ -62,7 +62,7 @@ class Slither
   	      content = [content] unless content.is_a?(Array)
   	      raise(Slither::RequiredSectionEmptyError, "Required section '#{section.name}' was empty.") if content.empty?
   	      content.each do |row|
-  	        builder << @section[section].format(row)
+  	        builder << @sections[section].format(row)
   	      end
   	    else
   	      raise(Slither::RequiredSectionEmptyError, "Required section '#{section.name}' was empty.") unless section.optional

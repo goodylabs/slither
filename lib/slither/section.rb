@@ -53,11 +53,22 @@ class Slither
       row = ''            
       @columns.each do |column|
         row += column.format(data[column.name])
-      end     
-      @sections.each_key do |section|
-        ss = @sections[section].format(data[section])
-        row += "\n" + ss  unless ss.blank?
       end
+      builder = []     
+      @sections.each_key do |section|       
+        content = data[section.name]
+        
+	      if content
+  	      content = [content] unless content.is_a?(Array)
+  	      raise(Slither::RequiredSectionEmptyError, "Required section '#{section.name}' was empty.") if content.empty?
+  	      content.each do |row|
+  	        builder << @section[section].format(row)
+  	      end
+  	    else
+  	      raise(Slither::RequiredSectionEmptyError, "Required section '#{section.name}' was empty.") unless section.optional
+	      end
+      end  
+      row += "\n" + builder.join("\n")  unless builder.blank?
       row
     end
     

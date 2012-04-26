@@ -1,14 +1,15 @@
 class Slither
   class Section
     attr_accessor :definition, :optional
-    attr_reader :name, :columns, :options
+    attr_reader :name, :columns, :options, :sections
     
     RESERVED_NAMES = [:spacer]
     
     def initialize(name, options = {})
       @name = name
       @options = options
-      @columns = []
+      @columns = []    
+      @sections = {}
       @trap = options[:trap]
       @optional = options[:optional] || false
     end
@@ -20,6 +21,13 @@ class Slither
       col = Column.new(name, length, @options.merge(options))
       @columns << col
       col
+    end      
+    
+    def section(name, options = {}, &block)
+      section = Slither::Section.new(name, @options.merge(options))
+      yield(section)
+      @sections[name] = section
+      
     end
     
     def spacer(length)

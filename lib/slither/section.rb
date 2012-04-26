@@ -56,7 +56,7 @@ class Slither
       end
       builder = []     
       @sections.each_key do |section|       
-        content = data[section.name]
+        content = data[section]
         
 	      if content
   	      content = [content] unless content.is_a?(Array)

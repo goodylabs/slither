@@ -50,9 +50,13 @@ class Slither
       # raise( ColumnMismatchError,
       #   "The '#{@name}' section has #{@columns.size} column(s) defined, but there are #{data.size} column(s) provided in the data."
       # ) unless @columns.size == data.size
-      row = ''      
+      row = ''            
       @columns.each do |column|
         row += column.format(data[column.name])
+      end     
+      @sections.each_key do |section|
+        ss = @sections[section].format(data[section])
+        row += "\n" + ss  unless ss.blank?
       end
       row
     end

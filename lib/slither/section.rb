@@ -65,7 +65,7 @@ class Slither
   	        builder << @sections[section].format(row)
   	      end
   	    else
-  	      raise(Slither::RequiredSectionEmptyError, "Required section '#{section.name}' was empty.") unless section.optional
+  	      raise(Slither::RequiredSectionEmptyError, "Required section '#{section.name}' was empty.") unless @sections[section].optional
 	      end
       end  
       row += "\n" + builder.join("\n")  unless builder.blank?
